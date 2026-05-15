@@ -1,6 +1,7 @@
 import mongoose from "mongoose"
 
 import { env } from './env.js'
+import e from "express"
 
 const connectDB = async () => {
     
@@ -21,4 +22,5 @@ const connectDB = async () => {
     }
 
 }
+export default connectDB
 
