@@ -1,11 +1,18 @@
+import bcrypt from "bcryptjs"
+
+import User from "../models/user.model.js"
+
+import Audit from "../models/audit.model.js"
+
 const getUsersService = async () => {
 
     try {
 
         console.log('SERVICE -> getUsersService')
-        return []
+        const users = await User.find().select('-password')
+        return users
     } catch (error) {
-        throw new Error(error.message)
+        throw error
     }
 }
 
@@ -15,7 +22,38 @@ const createUserService = async (data) => {
 
         console.log('SERVICE -> createUserService')
         console.log(data)
-        return data     
+
+        const existUser = await User.findOne({ email: data.email })
+        if (existUser) {
+            throw new Error('El email ya está registrado')
+        }
+
+        const hashedPassword = await bcrypt.hash(data.password, 10)
+        
+        const newUser = new User({
+            nombre: data.nombre,
+            apellido: data.apellido,
+            email: data.email,
+            password: hashedPassword,
+            edad: data.edad,
+            sexo: data.sexo,
+            telefono: data.telefono,
+            direccion: data.direccion
+        })
+        
+        await user.save()
+
+        return {
+            id: user_id,
+            nombre: user.nombre,
+            apellido: user.apellido,
+            email: user.email,
+            edad: user.edad,
+            sexo: user.sexo,
+            telefono: user.telefono,
+            direccion: user.direccion
+        }
+    
     } catch (error) {
         throw error
     }
