@@ -33,8 +33,27 @@ const userSchema = new mongoose.Schema({
     direccion: {
         type: String,
         required: true
-    }
-}, { timestamps: true })
+    },
+    localidad: {
+        type: String,
+        required: true
+    },
+    provincia: {
+        type: String,
+        required: true
+    },
+    pais: {
+        type: String,
+        required: true
+    },
+    cp: {
+        type: Number,
+        required: true
+    },
+    
+},
+
+{ timestamps: true })
 
 const User = mongoose.model("User", userSchema)
 
